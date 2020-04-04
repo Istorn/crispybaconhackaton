@@ -415,7 +415,7 @@ function detectPoseInRealTime(video, net) {
           
           valuesToSendAPI.push({keypoint,nowDateAndTime:{
             date: nowDateAndTime.getDate()+"/"+(nowDateAndTime.getMonth()+1)+"/"+nowDateAndTime.getFullYear(),
-            time:nowDateAndTime.getHours()+":"+nowDateAndTime.getMinutes()+":"+nowDateAndTime.getSeconds()+":"+nowDateAndTime.getMilliseconds()
+            time:nowDateAndTime.getTime()
           }});
         })
         
