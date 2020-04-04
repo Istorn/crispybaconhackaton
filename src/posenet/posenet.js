@@ -51,16 +51,16 @@ async function loadVideo() {
 
 const defaultQuantBytes = 2;
 
-const defaultMobileNetMultiplier = isMobile() ? 0.50 : 0.75;
+const defaultMobileNetMultiplier = isMobile() ? 1 : 1;
 const defaultMobileNetStride = 16;
 const defaultMobileNetInputResolution = 250;
 
-const defaultResNetMultiplier = 1.0;
+const defaultResNetMultiplier = 0.5;
 const defaultResNetStride = 16;
 const defaultResNetInputResolution = 250;
 
 const guiState = {
-  algorithm: 'multi-pose',
+  algorithm: 'single-pose',
   input: {
     architecture: 'MobileNetV1',
     outputStride: defaultMobileNetStride,
@@ -411,13 +411,18 @@ function detectPoseInRealTime(video, net) {
     // scores
     poses.forEach(({score, keypoints}) => {
         keypoints.forEach((keypoint)=>{
-          valuesToSendAPI.push(keypoint);
+          const nowDateAndTime= new Date();
+          
+          valuesToSendAPI.push({keypoint,nowDateAndTime:{
+            date: nowDateAndTime.getDate()+"/"+(nowDateAndTime.getMonth()+1)+"/"+nowDateAndTime.getFullYear(),
+            time:nowDateAndTime.getHours()+":"+nowDateAndTime.getMinutes()+":"+nowDateAndTime.getSeconds()+":"+nowDateAndTime.getMilliseconds()
+          }});
         })
         
         
-        if (valuesToSendAPI.length>=10000){
+        if (valuesToSendAPI.length>=1000){
           console.log(valuesToSendAPI);
-          gatherData(valuesToSendAPI);
+         gatherData(valuesToSendAPI);
           valuesToSendAPI=[];
         }
           
@@ -443,6 +448,18 @@ function detectPoseInRealTime(video, net) {
 
   poseDetectionFrame();
 }
+
+
+const padStart = (value)=>{
+  if (value.length<2)
+      {
+          console.log(value);
+          return "0".concat('',value.toString());
+      }
+
+      
+}
+
 
 /**
  * Kicks off the demo by loading the posenet model, finding and loading

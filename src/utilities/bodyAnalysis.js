@@ -2,29 +2,34 @@ import axios from 'axios';
 
 
 
+const padStart = (value)=>{
+    if (value.length<2)
+        return "0"+value;
+}
+
 const gatherData = async  (dataToAdd) => {
     console.log(dataToAdd);
         
-    const nowDateAndTime= new Date();
+    
     
 
     let arrayToSave=[];
     const result= await dataToAdd.forEach((value)=>{
 
         arrayToSave.push({
-            x: value.position.x,
-            y: value.position.y,
-            bodyPart: value.part,
-            score: value.score,
-            date: nowDateAndTime.getDate()+"/"+(nowDateAndTime.getMonth()+1)+"/"+nowDateAndTime.getFullYear(),
-            time:nowDateAndTime.getHours()+":"+nowDateAndTime.getMinutes()+":"+nowDateAndTime.getSeconds()+":"+nowDateAndTime.getMilliseconds()
+            x: value.keypoint.position.x,
+            y: value.keypoint.position.y,
+            bodyPart: value.keypoint.part,
+            score: value.keypoint.score,
+            date: value.nowDateAndTime.date,
+            time:value.nowDateAndTime.time
         });
         
         
     
           
 
-
+    
         
         
     })
