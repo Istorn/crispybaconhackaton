@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="main.js"></script>
+    <script src="view.js"></script>
+    <script src="app.js"></script>
+   
+  </head>
+  <body onload="load();">
+    <a-scene>
+      <!--<a-assets>
+        <img id="ring-texture" src="texture.png">
+      </a-assets>-->
+            <a-sky color="#b8e1ff"></a-sky>
+      <a-entity id="forest">
+        <a-entity class="tree" rotation="0 0 0">
+          <a-entity class="treeRadius" position="43 0 0">
+            <a-cone color="brown" radius-bottom="1" height="10" position="0 5 0" radius-top="0.1"></a-cone>
+            <a-sphere color="green" radius="5" position="0 10 0" scale="1 0.7 1" ></a-sphere>
+          </a-entity>
+        </a-entity>
+      </a-entity>
+
+
+
+      <!-- Basic ring. -->
+      <a-box height="0.01", width="500", depth="500", color="#609060"></a-box>
+      <a-entity rotation="-90 0 0" position="0 0.02 0">
+      <a-ring id="track" color="#c24e00" ></a-ring>
+      </a-entity>
+      <!-- Textured ring. -->
+      <!--<a-ring src="#texture">  </a-ring>-->
+    </a-scene>
+  </body>
+</html>
