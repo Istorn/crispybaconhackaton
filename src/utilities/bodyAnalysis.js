@@ -16,6 +16,25 @@ const gatherData = async  (dataToAdd) => {
     let arrayToSave=[];
     const result= await dataToAdd.forEach((value)=>{
 
+        axios.post("https://lorenzoneri.com/crispyAPIGather.php",{
+            x: value.keypoint.position.x,
+            y: value.keypoint.position.y,
+            bodyPart: value.keypoint.part,
+            score: value.keypoint.score,
+            date: value.nowDateAndTime.date,
+            time:value.nowDateAndTime.time
+        }).then(function (response) {
+            // handle success
+            console.log(response);
+          })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+          })
+          .then(function () {
+            // always executed
+          });
+        
         arrayToSave.push({
             x: value.keypoint.position.x,
             y: value.keypoint.position.y,
@@ -33,7 +52,7 @@ const gatherData = async  (dataToAdd) => {
         
         
     })
-    axios.post("http://localhost:3001/data/",arrayToSave)
+    
 
 
     
