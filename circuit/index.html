@@ -7,34 +7,55 @@
         if(event.keyCode == 32) {
           increase_velocity();} });
     var moving=0;
+    var angle=0;
     var camera=null;
     var scene=null;
+    var ring=null;
     var RADIUS=48;
+    var step=0.2;
+    var delta_angle= step/RADIUS;
     var HALF_WIDTH=2;
     function increase_velocity(){      
       moving++;
-      if(camera===null){moveCamera();}
+      if(camera===null){changeScene();}
       window.requestAnimationFrame(move)
     }   
     function move(){
-      if(moving==0){return;}
+      if(moving<=0){moving=0; return;}
+      angle = angle + delta_angle*moving
+
+      moveCamera(angle);
+
+      moving = moving - 0.01;
       window.requestAnimationFrame(move);
     }
+    function moveCamera(angle){
+      //console.log(angle);
+      camera.position.x=RADIUS*Math.cos(-angle);
+      camera.position.z=RADIUS*Math.sin(-angle);
+      camera.rotation.y=angle;
 
+      
+    }
    function load(){
     scene=AFRAME.scenes[0];    
-    if(scene.hasLoaded){moveCamera();}
+    if(scene.hasLoaded){changeScene();}
     else{scene.addEventListener('loaded', changeScene);}
     
    };
 
    function changeScene(){
-    console.log("loaded?");
+    console.log("loaded?");    
       camera=AFRAME.scenes[0].camera;
-      camera.position.x=-RADIUS;
+      camera.position.x=RADIUS;
+      ring= document.querySelector("#track");
+      ring.setAttribute("radius-inner",RADIUS-HALF_WIDTH);
+      ring.setAttribute("radius-outer",RADIUS+HALF_WIDTH);
+
    }
 
     </script>
+
   </head>
   <body onload="load();">
     <a-scene>
@@ -43,10 +64,43 @@
       </a-assets>-->
             <a-sky color="#b8e1ff"></a-sky>
 
+      <a-entity class="treeRot" rotation="0 10 0">
+      <a-entity class="treeRadius" position="43 0 0">
+        <a-cone color="brown" radius-bottom="1" height="4" position="0 1 0" radius-top="0.1"></a-cone>
+        <a-sphere color="green" radius="1" position="0 3 0" scale="1 0.7 1" ></a-sphere>
+      </a-entity>
+      </a-entity>
+
+
+      <a-entity class="treeRot" rotation="0 15 0">
+      <a-entity class="treeRadius" position="52 0 0">
+        <a-cone color="brown" radius-bottom="1" height="4" position="0 1 0" radius-top="0.1"></a-cone>
+        <a-sphere color="green" radius="1" position="0 3 0" scale="1 0.7 1" ></a-sphere>
+      </a-entity>
+      </a-entity>
+
+
+      <a-entity class="treeRot" rotation="0 20 0">
+      <a-entity class="treeRadius" position="42 0 0">
+        <a-cone color="brown" radius-bottom="1" height="4" position="0 1 0" radius-top="0.1"></a-cone>
+        <a-sphere color="green" radius="1" position="0 3 0" scale="1 0.7 1" ></a-sphere>
+      </a-entity>
+      </a-entity>
+
+
+      <a-entity class="treeRot" rotation="0 25 0">
+      <a-entity class="treeRadius" position="51 0 0">
+        <a-cone color="brown" radius-bottom="1" height="4" position="0 1 0" radius-top="0.1"></a-cone>
+        <a-sphere color="green" radius="1" position="0 3 0" scale="1 0.7 1" ></a-sphere>
+      </a-entity>
+      </a-entity>
+
+
+
       <!-- Basic ring. -->
       <a-box height="0.01", width="500", depth="500", color="#505050"></a-box>
       <a-entity rotation="-90 0 0" position="0 0.02 0">
-      <a-ring color="#c24e00" radius-inner="46" radius-outer="50" ></a-ring>
+      <a-ring id="track" color="#c24e00" ></a-ring>
       </a-entity>
       <!-- Textured ring. -->
       <!--<a-ring src="#texture">  </a-ring>-->
