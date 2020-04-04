@@ -1,3 +1,12 @@
+Dipendenze da installare:
+
+create-react-app
+dat.gui
+stat-js
+@tensorflow-models/posenet
+@tensorflow/tfjs
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
