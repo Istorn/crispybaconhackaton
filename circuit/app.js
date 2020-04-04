@@ -1,48 +1,46 @@
-
-      
-     
-    function step(){            
-      if(camera===null){changeScene();}
-      angle = angle + delta_angle;//*moving
-      
-      if(moving==0){                
-        window.requestAnimationFrame(move);
-      }
-      moving=1;
-    }   
-    function move(){
-      if(moving<=0){moving=0; return;}      
-      
-      moveCamera(angle);
-
-      moving = moving - 0.01;
-      angle = angle+ 0.1*delta_angle; 
-      window.requestAnimationFrame(move);
-    }
-    function moveCamera(angle){
-      //console.log(angle);
-      camera.position.x=RADIUS*Math.cos(-angle);
-      camera.position.z=RADIUS*Math.sin(-angle);
-      camera.rotation.y=angle;
-
-      
-    }
-   function load(){
-    scene=AFRAME.scenes[0];    
-    if(scene.hasLoaded){changeScene();}
-    else{scene.addEventListener('loaded', changeScene);}
     
-   };
+ 
 
-   function changeScene(){
-    console.log("loaded?");    
-      camera=AFRAME.scenes[0].camera;
-      camera.position.x=RADIUS;
-      ring= document.querySelector("#track");
-      ring.setAttribute("radius-inner",RADIUS-HALF_WIDTH);
-      ring.setAttribute("radius-outer",RADIUS+HALF_WIDTH);
-      createTrees();
-   }
- document.addEventListener('keydown', function(event){
+
+function update(){
+  if(lastT===null){
+    lastT=getSeconds();
+    window.requestAnimationFrame(update);
+    return; 
+  }
+  curT=getSeconds();
+  deltaT=curT-lastT; //seconds
+  //console.log(1/deltaT);
+  deltaStep= stepsize*BPM*deltaT/60.; // m
+  //console.log(deltaStep);
+  if (deltaStep<MINSTEP){deltaStep=0;}
+  step(deltaStep);
+  
+  inertia();
+  lastT=curT;
+  window.requestAnimationFrame(update);
+}
+
+function load(){
+  scene=AFRAME.scenes[0];    
+  console.log("loading...");
+  console.log(scene);
+  if(scene.hasLoaded){sceneLoaded();}
+  else{scene.addEventListener('loaded', sceneLoaded);}
+};
+
+function sceneLoaded(){
+  console.log("loaded?");    
+  camera=AFRAME.scenes[0].camera;
+  camera.position.x=RADIUS;
+  camera.position.y=1.7; // 170 cm
+  ring= document.querySelector("#track");
+  ring.setAttribute("radius-inner",RADIUS-HALF_WIDTH);
+  ring.setAttribute("radius-outer",RADIUS+HALF_WIDTH);
+  createTrees();
+  window.requestAnimationFrame(update);
+}
+document.addEventListener('keydown', function(event){
         if(event.keyCode == 32) {
-          step();} });
+          step();} }
+          );
