@@ -1,11 +1,11 @@
 import * as posenet from '@tensorflow-models/posenet';
 import dat from 'dat.gui';
 import Stats from 'stats-js';
-
+import gatherData from '../utilities/bodyAnalysis';
 import {drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from './demo_util';
 
-const videoWidth = 600;
-const videoHeight = 500;
+const videoWidth = 250;
+const videoHeight = 250;
 const stats = new Stats();
 
 /**
@@ -53,10 +53,10 @@ const defaultQuantBytes = 2;
 
 const defaultMobileNetMultiplier = isMobile() ? 0.50 : 0.75;
 const defaultMobileNetStride = 16;
-const defaultMobileNetInputResolution = 500;
+const defaultMobileNetInputResolution = 250;
 
 const defaultResNetMultiplier = 1.0;
-const defaultResNetStride = 32;
+const defaultResNetStride = 16;
 const defaultResNetInputResolution = 250;
 
 const guiState = {
@@ -410,6 +410,9 @@ function detectPoseInRealTime(video, net) {
     // and draw the resulting skeleton and keypoints if over certain confidence
     // scores
     poses.forEach(({score, keypoints}) => {
+        
+        gatherData(keypoints);
+
       if (score >= minPoseConfidence) {
         if (guiState.output.showPoints) {
           drawKeypoints(keypoints, minPartConfidence, ctx);

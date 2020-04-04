@@ -5,7 +5,7 @@ dat.gui
 stat-js
 @tensorflow-models/posenet
 @tensorflow/tfjs
-
+json-server
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
