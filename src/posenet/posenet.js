@@ -410,7 +410,7 @@ function detectPoseInRealTime(video, net) {
     // and draw the resulting skeleton and keypoints if over certain confidence
     // scores
     poses.forEach(({score, keypoints}) => {
-        
+        console.log(keypoints.part);
         gatherData(keypoints);
 
       if (score >= minPoseConfidence) {
