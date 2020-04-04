@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script>
+      
+      document.addEventListener('keydown', function(event){
+        if(event.keyCode == 32) {
+          increase_velocity();} });
+    var moving=0;
+    var camera=null;
+    var scene=null;
+    var RADIUS=48;
+    var HALF_WIDTH=2;
+    function increase_velocity(){      
+      moving++;
+      if(camera===null){moveCamera();}
+      window.requestAnimationFrame(move)
+    }   
+    function move(){
+      if(moving==0){return;}
+      window.requestAnimationFrame(move);
+    }
+
+   function load(){
+    scene=AFRAME.scenes[0];    
+    if(scene.hasLoaded){moveCamera();}
+    else{scene.addEventListener('loaded', changeScene);}
+    
+   };
+
+   function changeScene(){
+    console.log("loaded?");
+      camera=AFRAME.scenes[0].camera;
+      camera.position.x=-RADIUS;
+   }
+
+    </script>
+  </head>
+  <body onload="load();">
+    <a-scene>
+      <!--<a-assets>
+        <img id="ring-texture" src="texture.png">
+      </a-assets>-->
+            <a-sky color="#b8e1ff"></a-sky>
+
+      <!-- Basic ring. -->
+      <a-box height="0.01", width="500", depth="500", color="#505050"></a-box>
+      <a-entity rotation="-90 0 0" position="0 0.02 0">
+      <a-ring color="#c24e00" radius-inner="46" radius-outer="50" ></a-ring>
+      </a-entity>
+      <!-- Textured ring. -->
+      <!--<a-ring src="#texture">  </a-ring>-->
+    </a-scene>
+  </body>
+</html>
