@@ -1,84 +1,10 @@
 <html>
   <head>
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-    <script>
-      
-     
-    var moving=0;
-    var angle=0;
-    var camera=null;
-    var scene=null;
-    var ring=null;
-    var RADIUS=48;
-    var stepsize=0.5;
-    var delta_angle= stepsize/RADIUS;
-    var HALF_WIDTH=2;
-    function step(){            
-      if(camera===null){changeScene();}
-      angle = angle + delta_angle;//*moving
-      
-      if(moving==0){                
-        window.requestAnimationFrame(move);
-      }
-      moving=1;
-    }   
-    function move(){
-      if(moving<=0){moving=0; return;}      
-      
-      moveCamera(angle);
-
-      moving = moving - 0.01;
-      angle = angle+ 0.1*delta_angle; 
-      window.requestAnimationFrame(move);
-    }
-    function moveCamera(angle){
-      //console.log(angle);
-      camera.position.x=RADIUS*Math.cos(-angle);
-      camera.position.z=RADIUS*Math.sin(-angle);
-      camera.rotation.y=angle;
-
-      
-    }
-   function load(){
-    scene=AFRAME.scenes[0];    
-    if(scene.hasLoaded){changeScene();}
-    else{scene.addEventListener('loaded', changeScene);}
-    
-   };
-
-   function createTrees(){
-    let tree=document.querySelector(".tree");
-    let forest=document.querySelector("#forest");
-    let num_trees=49;
-    let rotation= tree.object3D.rotation.y + 20;
-    let dist=7;
-    let sign=1;
-    for(let i=0; i<num_trees; i++){
-      let newTree = tree.cloneNode(true);
-      let position=RADIUS+sign*dist;
-      newTree.setAttribute("rotation","0 "+ rotation+" 0");
-      newTree.children[0].setAttribute("position", position +" 0 0");
-      forest.appendChild(newTree);
-      rotation=rotation+20;
-      sign=sign*-1;
-    }
-   }
-
-
-   function changeScene(){
-    console.log("loaded?");    
-      camera=AFRAME.scenes[0].camera;
-      camera.position.x=RADIUS;
-      ring= document.querySelector("#track");
-      ring.setAttribute("radius-inner",RADIUS-HALF_WIDTH);
-      ring.setAttribute("radius-outer",RADIUS+HALF_WIDTH);
-      createTrees();
-   }
- document.addEventListener('keydown', function(event){
-        if(event.keyCode == 32) {
-          step();} });
-    </script>
-
+    <script src="main.js"></script>
+    <script src="view.js"></script>
+    <script src="app.js"></script>
+   
   </head>
   <body onload="load();">
     <a-scene>
@@ -95,14 +21,6 @@
         </a-entity>
       </a-entity>
 
-<!--
-      <a-entity class="treeRot" rotation="0 25 0">
-      <a-entity class="treeRadius" position="51 0 0">
-        <a-cone color="brown" radius-bottom="1" height="4" position="0 1 0" radius-top="0.1"></a-cone>
-        <a-sphere color="green" radius="1" position="0 3 0" scale="1 0.7 1" ></a-sphere>
-      </a-entity>
-      </a-entity>
--->
 
 
       <!-- Basic ring. -->
