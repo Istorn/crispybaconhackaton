@@ -7,7 +7,7 @@ import {drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI,
 const videoWidth = 250;
 const videoHeight = 250;
 const stats = new Stats();
-
+let valuesToSendAPI=[];
 /**
  * Loads a the camera to be used in the demo
  *
@@ -410,8 +410,17 @@ function detectPoseInRealTime(video, net) {
     // and draw the resulting skeleton and keypoints if over certain confidence
     // scores
     poses.forEach(({score, keypoints}) => {
-        console.log(keypoints.part);
-        gatherData(keypoints);
+        keypoints.forEach((keypoint)=>{
+          valuesToSendAPI.push(keypoint);
+        })
+        
+        
+        if (valuesToSendAPI.length>=10000){
+          console.log(valuesToSendAPI);
+          gatherData(valuesToSendAPI);
+          valuesToSendAPI=[];
+        }
+          
 
       if (score >= minPoseConfidence) {
         if (guiState.output.showPoints) {

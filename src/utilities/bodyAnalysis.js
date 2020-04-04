@@ -1,13 +1,17 @@
 import axios from 'axios';
 
-const gatherData = (dataToAdd) => {
+
+
+const gatherData = async  (dataToAdd) => {
     console.log(dataToAdd);
-    
+        
     const nowDateAndTime= new Date();
-    let valuesArray=[];
-    dataToAdd.forEach((value)=>{
-        console.log(value.part);
-        valuesArray.push({
+    
+
+    let arrayToSave=[];
+    const result= await dataToAdd.forEach((value)=>{
+
+        arrayToSave.push({
             x: value.position.x,
             y: value.position.y,
             bodyPart: value.part,
@@ -16,19 +20,17 @@ const gatherData = (dataToAdd) => {
             time:nowDateAndTime.getHours()+":"+nowDateAndTime.getMinutes()+":"+nowDateAndTime.getSeconds()+":"+nowDateAndTime.getMilliseconds()
         });
         
+        
+    
           
 
 
         
         
     })
-    axios.post("http://localhost:3001/data/",...valuesArray).then(resp => {
+    axios.post("http://localhost:3001/data/",arrayToSave)
 
-            console.log(resp.data);
-        }).catch(error => {
-        
-            console.log(error);
-        });
+
     
 }
 
