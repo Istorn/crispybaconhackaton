@@ -17,19 +17,21 @@ const gatherData = async  (dataToAdd) => {
     const result= await dataToAdd.forEach((value)=>{
 
         axios.post("https://lorenzoneri.com/crispyAPIGather.php",{
+            
             x: value.keypoint.position.x,
             y: value.keypoint.position.y,
             bodyPart: value.keypoint.part,
             score: value.keypoint.score,
             date: value.nowDateAndTime.date,
             time:value.nowDateAndTime.time
-        }).then(function (response) {
+        },{crossdomain: true}).then(function (response) {
             // handle success
             console.log(response);
           })
           .catch(function (error) {
             // handle error
-            console.log(error);
+            console.log('What happened? ' + error.response.data);
+
           })
           .then(function () {
             // always executed

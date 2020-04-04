@@ -1,9 +1,10 @@
 import * as posenet from '@tensorflow-models/posenet';
 import dat from 'dat.gui';
 import Stats from 'stats-js';
-import gatherData from '../utilities/bodyAnalysis';
+//import gatherData from '../utilities/bodyAnalysis';
 import {drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from './demo_util';
-
+import find_bpm from '../utilities/bpmFunctions';
+import { setTimeout } from 'timers';
 const videoWidth = 250;
 const videoHeight = 250;
 const stats = new Stats();
@@ -79,9 +80,9 @@ const guiState = {
     nmsRadius: 30.0,
   },
   output: {
-    showVideo: true,
-    showSkeleton: true,
-    showPoints: true,
+    showVideo: false,
+    showSkeleton: false,
+    showPoints: false,
     showBoundingBox: false,
   },
   net: null,
@@ -265,8 +266,8 @@ function setupGui(cameras, net) {
  * Sets up a frames per second panel on the top-left of the window
  */
 function setupFPS() {
-  stats.showPanel(0);  // 0: fps, 1: ms, 2: mb, 3+: custom
-  document.getElementById('main').appendChild(stats.dom);
+  //stats.showPanel(0);  // 0: fps, 1: ms, 2: mb, 3+: custom
+  //document.getElementById('main').appendChild(stats.dom);
 }
 
 /**
@@ -274,6 +275,7 @@ function setupFPS() {
  * happens. This function loops with a requestAnimationFrame method.
  */
 function detectPoseInRealTime(video, net) {
+  let BPMValue= 0;
   const canvas = document.getElementById('output');
   const ctx = canvas.getContext('2d');
 
@@ -409,22 +411,24 @@ function detectPoseInRealTime(video, net) {
     // For each pose (i.e. person) detected in an image, loop through the poses
     // and draw the resulting skeleton and keypoints if over certain confidence
     // scores
+    
     poses.forEach(({score, keypoints}) => {
+
+
+       
+
+/*
         keypoints.forEach((keypoint)=>{
-          const nowDateAndTime= new Date();
+          
           
           valuesToSendAPI.push({keypoint,nowDateAndTime:{
             date: nowDateAndTime.getDate()+"/"+(nowDateAndTime.getMonth()+1)+"/"+nowDateAndTime.getFullYear(),
             time:nowDateAndTime.getTime()
           }});
         })
+  */      
         
-        
-        if (valuesToSendAPI.length>=1000){
-          console.log(valuesToSendAPI);
-         gatherData(valuesToSendAPI);
-          valuesToSendAPI=[];
-        }
+       
           
 
       if (score >= minPoseConfidence) {
@@ -440,6 +444,16 @@ function detectPoseInRealTime(video, net) {
       }
     });
 
+
+     //Elementi Y spalla sinistra e destra più istante temporale 
+     const nowDateAndTime= new Date();
+    
+     const leftShoulder = poses[0].keypoints.filter((ele)=>  ele.part === 'leftShoulder')[0].position.y;
+     const rightShoulder= poses[0].keypoints.filter((ele)=>  ele.part === 'rightShoulder')[0].position.y;
+
+     BPMValue = find_bpm(Math.round((leftShoulder+rightShoulder)/2 ),nowDateAndTime );
+     console.log(BPMValue);
+     blinkingElement(BPMValue);
     // End monitoring code for frames per second
     stats.end();
 
@@ -447,6 +461,7 @@ function detectPoseInRealTime(video, net) {
   }
 
   poseDetectionFrame();
+  return BPMValue;
 }
 
 
@@ -458,6 +473,29 @@ const padStart = (value)=>{
       }
 
       
+}
+
+
+const blinkingElement = (timeblink) =>{
+  
+  const blinkingTime=60/timeblink; 
+  
+  
+  startBlinking(blinkingTime)
+}
+
+
+function startBlinking(blinkt) {
+  setInterval(function () { 
+    blink(blinkt);
+  }, blinkt*1000);
+}
+function blink(blinkt) {
+  // note no timeout for the hiding part
+  document.getElementById('blink').innerHTML = "RUN";
+  setTimeout(function () {
+    document.getElementById('blink').innerHTML = "STAY";
+  }, (blinkt/2)*1000);
 }
 
 
@@ -490,6 +528,9 @@ export default async function bindPage() {
 
   setupGui([], net);
   setupFPS();
-  detectPoseInRealTime(video, net);
+  const bpmvalue=detectPoseInRealTime(video, net);
+  console.log("invoco blink");
+  
+  
 }
 
