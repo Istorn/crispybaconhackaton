@@ -13,10 +13,11 @@ import update_stats_screen  from '../utilities/statsScreen';
  let lastT=null;
  let curT=0;
  let lambdaBPM=0.8;
+ let lambdaKMH=0.95;
  let lambdaAngle=0.99;
  let inertiaBPM=0.995;
  let always_steady=false;
- let distance=0;
+ let totalDistance=0;
  let b=0;
  let lastKMH=0;
 
@@ -73,8 +74,9 @@ import update_stats_screen  from '../utilities/statsScreen';
   {x: 1.522, z:  2.606 },];
  
  function getSeconds(){
-	let d = new Date();
-	return d.getMilliseconds()/1000.;
+	let d = Date.now();
+  
+	return d/1000.;
 }
 
  export  function updateBPM(newBPM){
@@ -160,11 +162,12 @@ function update(){
   //console.log(1/deltaT);
   let deltaStep= virtualStepsize*BPM*deltaT/60.; // m virtuali
   
-  distance+=realStepsize*BPM*deltaT/60.; // m;
+  totalDistance+=(realStepsize*BPM*deltaT/60.); // m;
   let newKMH = realStepsize*BPM/60.; // m; = m/s
   newKMH = newKMH * 3.6;
-  lastKMH = 0.9 * lastKMH + 0.1 * newKMH;
-  update_stats_screen(lastKMH, distance/1000.);
+  lastKMH = lambdaKMH * lastKMH + (1-lambdaKMH) * newKMH;
+  if(deltaT<0){console.log(deltaT, totalDistance);}
+  update_stats_screen(lastKMH, totalDistance/1000.);
 
   if (deltaStep<MINSTEP){deltaStep=0;}
   step(deltaStep);
