@@ -218,10 +218,11 @@ function showBreakpoints(){
 function sceneLoaded(){
   console.log("loaded?");    
   camera=window.AFRAME.scenes[0].camera;
+  console.log(camera);
   camera.el.removeAttribute('wasd-controls');
   camera.el.removeAttribute('look-controls');
   
-  console.log(camera);
+  
   camera.position.y=-0.5; // 170 cm
   //showBreakpoints();
   window.requestAnimationFrame(update);
