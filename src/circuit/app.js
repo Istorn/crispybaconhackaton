@@ -145,11 +145,15 @@ function moveTo(deltaStep, angle){
     moveTo(deltaStep, distNext.phi);
   }
   else{
-   moveTo(distNext.r, distNext.phi);
-   b=(b+1)%breakpoints.length;
-   //moveCube();
    console.log("Breakpoint "+b);
-   step(deltaStep-distNext.r)
+   
+   // v0
+   moveTo(distNext.r, distNext.phi);
+   b=(b+1)%breakpoints.length;   
+   step(deltaStep-distNext.r); 
+   // v1
+   /*b=(b+1)%breakpoints.length;   
+   step(deltaStep); */
   }  
 }   
 
