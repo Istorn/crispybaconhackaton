@@ -13,12 +13,29 @@ class VideoRenderer extends React.Component{
         return (
             <div id='main'  >
                 <CircuitDisplay/>
-                <video id="video" style={{'width':0, 'height':0}} hidden>
+                <video id="video" hidden>
 
                 </video>
-                <canvas id="output" hidden/>
+                <canvas id="output" style={{"position":"absolute","top":"0px","right":"0px","opacity":"0.5"}}/>
+                <div id="stats" style={{"position":"absolute","top":"40px","left":"40px","opacity":"1"}}>
+                <div className="ui statistic">
+                    <div className="label">
+                        Ritmo
+                    </div>
+                    <div className="value" id="ritmo">
+                        
+                    </div>
+                    <br/>
+                    <div className="label">
+                        Km percorsi
+                    </div>
+                    <div className="value" id="kmPercorsi">
+                        
+                    </div>
+                    </div>
+                </div>
                 <div id="blink">
-                    Pause
+                    
                 </div>
             </div>
         );
