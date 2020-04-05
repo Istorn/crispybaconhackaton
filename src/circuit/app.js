@@ -1,30 +1,73 @@
- let BPM=2000;
+ let BPM=0;
  
- let angle=0;
  let camera=null;
  let scene=null;
- let RADIUS=48;
-
+ 
  let MINSTEP=0.001;
- let HALF_WIDTH=2;
- let stepsize=1;
+ let realStepsize=0.5;
+ let virtualStepsize=1;
  let lastT=null;
  let curT=0;
  let lambdaBPM=0.8;
+ let lambdaAngle=0.99;
  let inertiaBPM=0.995;
  let always_steady=true;
- let path=0;
- let PATH_1_TH=28;
- let PATH_2_TH=32;
- let PATH_3_TH=50;
- let PATH_4_TH=60;
- let PATH_5_TH=67;
- let PATH_6_TH=81;
- let PATH_7_TH=93;
- let PATH_8_TH=118;
- let PATH_9_TH=169;
- let PATH_10_TH=178;
- let PATH_11_TH=190;
+ let distance=0;
+ let b=0;
+ let lastKMH=0;
+
+
+
+ let breakpoints=[
+  {x: 0.672, z:-6.465},      //0
+  {x: 0.672, z: -20.689  },  // 1
+  {x: 2.760, z:  -33.775 },   // 2
+  {x: 9.436, z:  -38.917 },   // 3
+  {x: 15.264, z:  -46.298 },   //4 
+  {x: 12.420, z:  -55.250 },   // 5
+  {x: 4.680, z:  -62.470 },   //6
+  {x: 4.157, z: -71.891  },   // 7
+  {x: 5.571, z:  -81.612 },   //8 
+  {x: 6.339, z:  -94.349 },   //9 
+  {x: 11.420, z:  -99.025 },   //9   
+  {x: 20.478, z: -99.025},    //10
+  {x: 31.794, z:  -98.203 },
+  {x: 37.876, z:  -95.422 },
+  {x: 40.857, z:  -92.427 },
+  {x: 42.740, z: -91.755 },
+  {x: 45.959, z:  -93.878 },
+  {x: 50.057, z: -96.068  },
+  {x: 55.481, z:  -96.678 },
+  {x: 73.273, z: -95.699 },
+  {x: 78.395, z: -95.425  },
+  {x: 78.415, z:  -89.560 },
+  {x:78.415, z:  -65.837 },
+ {x: 77.894, z:  -61.946 },
+  {x:76.054, z: -58.602  },
+  {x: 72.000, z: -54.408  },
+  {x: 67.539, z: -51.325  },
+  {x: 63.981, z: -48.009  },
+  {x: 62.417, z:  -44.099 },
+  {x:62.417, z: -41.182 },
+  {x: 64.666, z: -36.413  },
+  {x: 69.304, z: -32.053  },
+  {x: 72.983, z:  -27.631 },
+  {x: 73.405, z:  -21.270 },
+ {x: 70.407, z: 3.364 },
+  {x: 70.164, z: 7.292  },
+  {x: 67.767, z:  7.127 },
+  {x: 60.902, z: 6.743  },
+  {x: 47.581, z: 5.697  },
+  {x: 43.741, z:  4.483 },
+  {x: 40.232, z: 2.682  },
+  {x: 38.283, z: 0.845  },
+  {x: 35.736, z: -1.152  },
+  {x: 31.869, z: 1.777  },
+  {x: 27.724, z: 3.529 },
+ {x:23.856 , z: 3.888  },
+  {x: 4.388, z:  2.606 },
+  {x: 1.522, z:  2.606 },];
+ 
  function getSeconds(){
 	let d = new Date();
 	return d.getMilliseconds()/1000.;
@@ -44,76 +87,66 @@
 };
 
 
- function step(deltaStep){            
+function towards(dest){
+ // console.log("I'm at "+camera.position.x+" "+camera.position.z);
+  //console.log(b+"-> I want to go to "+dest.x+" "+dest.z);
+  let diffZ=-(dest.x-camera.position.x);
+  let diffX=-(dest.z-camera.position.z);
+
+  let phi=0;
+ // console.log("diffX= "+diffX+ "diffZ= "+diffZ);
+  if (diffX===0 && diffZ===0){phi= 0;}
+  else if (diffX===0 && diffZ>0){phi= 0.5*Math.PI;}
+  else if (diffX===0 && diffZ<0){phi= -0.5*Math.PI;}
+  else if (diffZ===0 && diffX<0){phi = Math.PI;}
+  else if (diffX>0){phi= Math.atan(diffZ/diffX);}
+  else if (diffZ>0){phi= Math.atan(diffZ/diffX)+Math.PI;}
+  else if (diffZ<0){phi= Math.atan(diffZ/diffX)-Math.PI;}
+ // console.log("New angle is "+(phi));
+  return {r:Math.sqrt(diffX*diffX+diffZ*diffZ), phi:phi}
+}           
+function moveCube(){
+  console.log("Breakpoint "+b);
+  let sign=document.querySelector("#breakpoint");
+  sign.setAttribute("position", breakpoints[b].x +" 5 "+ breakpoints[b].z);
+}
+function moveTo(deltaStep, angle){  
+  camera.position.z =camera.position.z-deltaStep*Math.cos(-angle);
+  camera.position.x =camera.position.x+deltaStep*Math.sin(-angle);
+  if(Math.abs(camera.rotation.y - angle)>Math.PI){ // problems around -PI + PI
+      if(camera.rotation.y>0)         
+      { 
+        camera.rotation.y = camera.rotation.y  - 2*Math.PI;
+      }
+      else
+      { 
+        camera.rotation.y = camera.rotation.y + 2*Math.PI;
+      }
+  }
+  camera.rotation.y = lambdaAngle*camera.rotation.y + (1-lambdaAngle)*angle;//*180/Math.PI; 
+}            
+ function step(deltaStep){    
   if(camera===null){ 
     console.log("Problem");
   }
-  let angle=0;
-  path += deltaStep;
-  if(deltaStep==0){return;}
-  if(path < PATH_1_TH){    
-    console.log(path);
-  }
-  else if(path < PATH_2_TH){
-    angle = 0.25*Math.PI*(path-PATH_1_TH)/(PATH_2_TH-PATH_1_TH);
-    console.log("Angle is " + (angle*180/Math.PI));
-    
-  }
-  else if(path < PATH_3_TH){
-    angle = 0.25*Math.PI;
-  }
-  else if(path < PATH_4_TH){
-    angle = Math.PI*(0.25-0.5*(path-PATH_3_TH)/(PATH_4_TH-PATH_3_TH));    
-  }
+  let distNext=towards(breakpoints[b])
 
-  else if(path < PATH_5_TH){    
-    angle = -0.25*Math.PI;
+  if(distNext.r > deltaStep){
+    moveTo(deltaStep, distNext.phi);
   }
-  else if(path < PATH_6_TH){    
-   // BPM=200;
-    angle = Math.PI*(-0.25+0.25*(path-PATH_5_TH)/(PATH_6_TH-PATH_5_TH)); 
-  }
-  else if(path < PATH_7_TH){    
-    
-    angle = 0;//Math.PI*(-0.25+0.25*(path-PATH_5_TH)/(PATH_6_TH-PATH_5_TH)); 
-  }
-  else if(path < PATH_8_TH){    
-    
-   // BPM=200;
-    angle = Math.PI*0.5*(path-PATH_7_TH)/(PATH_8_TH-PATH_7_TH); 
-  }
-  else if(path < PATH_9_TH){    
-    angle = Math.PI*0.50;//-0.25*Math.PI;
-  }
-  else if(path < PATH_10_TH){    
-    BPM=200;
-    angle = Math.PI*(0.5+0.5*(path-PATH_9_TH)/(PATH_10_TH-PATH_9_TH)); 
-     
-   // BPM=200;
-    //angle = Math.PI*0.5*(path-PATH_7_TH)/(PATH_8_TH-PATH_7_TH); 
-  }    
   else{
-    angle = Math.PI;//-0.25*Math.PI;
-    BPM=0;
-  }
-  console.log("Angle is " + (angle*180/Math.PI));
-  camera.position.z =camera.position.z-deltaStep*Math.cos(angle);
-  camera.position.x =camera.position.x+deltaStep*Math.sin(angle);
-  camera.rotation.y = -angle;//*180/Math.PI; 
-  /*
-  angle = angle + deltaStep/RADIUS;
-  camera.position.x=RADIUS*Math.cos(-angle);
-  camera.position.z=RADIUS*Math.sin(-angle);
-
-  //camera.position.y=camera.position.y+DELTAHEAD*Math.cos(2*Math.PI*curT*BPM/60.);
-
-  camera.rotation.y=angle;  */
+   moveTo(distNext.r, distNext.phi);
+   b=(b+1)%breakpoints.length;
+   moveCube();
+   step(deltaStep-distNext.r)
+  }  
 }   
 
 
+
 function update(){
-  console.log(camera.position);
-  if(lastT===null){
+
+  if(!lastT){
     lastT=getSeconds();
     window.requestAnimationFrame(update);
     return; 
@@ -121,8 +154,14 @@ function update(){
   curT=getSeconds();
   let deltaT=curT-lastT; //seconds
   //console.log(1/deltaT);
-  let deltaStep= stepsize*BPM*deltaT/60.; // m
-  console.log(deltaStep);
+  let deltaStep= virtualStepsize*BPM*deltaT/60.; // m virtuali
+  
+  distance+=realStepsize*BPM*deltaT/60.; // m;
+  let newKMH = realStepsize*BPM/60.; // m; = m/s
+  newKMH = newKMH * 3.6;
+  lastKMH = 0.9 * lastKMH + 0.1 * newKMH;
+  //update_stats_screen(lastKMH, distance/1000.);
+
   if (deltaStep<MINSTEP){deltaStep=0;}
   step(deltaStep);
   
