@@ -17,7 +17,7 @@ class CircuitDisplay extends React.Component{
     }
     render(){
         return(
-            <div id="scena" style={{'z-index':-100}}>
+            <div id="scena">
                 <a-scene>
      
                 <a-sky color="#b8e1ff"></a-sky>
