@@ -3,8 +3,9 @@ import React from 'react';
 
 import load from '../circuit/app';
 
-
-
+import sky from '../assets/day.jpg';
+import country2 from '../assets/large_countryside.obj';
+import country2Mtl from '../assets/large_countryside.mtl';
 class CircuitDisplay extends React.Component{
 
 
@@ -16,29 +17,28 @@ class CircuitDisplay extends React.Component{
         
     }
     render(){
+
+        /* intensità per la notte: 0.3, disabilitare sopra e usare night.jpg
+        intensità per il giorno: 0.7, true sopra e usare day.jpg*/
+
         return(
             <div id="scena">
-                <a-scene>
-     
-                <a-sky color="#b8e1ff"></a-sky>
-                    <a-entity id="forest">
-                        <a-entity class="tree" rotation="0 0 0">
-                        <a-entity class="treeRadius" position="43 0 0">
-                            <a-cone color="brown" radius-bottom="1" height="10" position="0 5 0" radius-top="0.1"></a-cone>
-                            <a-sphere color="green" radius="5" position="0 10 0" scale="1 0.7 1" ></a-sphere>
-                        </a-entity>
-                        </a-entity>
-                    </a-entity>
-                    
 
+                <a-scene light="defaultLightsEnabled: true">      
+                    <a-entity light="type: ambient; intensity: 0.7"></a-entity>
+                    <a-entity light="type: directional; intensity: 0.8 castShadow:true; position=1 10 1"></a-entity>
+                    <a-assets>
+                        <a-asset-item id="scene-obj" src={country2}></a-asset-item>
+                        <a-asset-item id="scene-mtl" src={country2Mtl}></a-asset-item>
+                        <img id="sky" src={sky} />
+                    </a-assets>
+                    <a-entity obj-model="obj: #scene-obj; mtl: #scene-mtl"  shadow="cast: true" position="-0.6 0 6" rotation="0 176 0"></a-entity>
+                    <a-sky src="#sky"></a-sky>
+            
+                    <div id="entityMode"></div>
+                    <a-sphere id="breakpoint" position="0.672 4 -6.465" scale="1 1 1" color="red"></a-sphere>
+                </a-scene>
 
-                    
-                    <a-box height="0.01" width="500" depth="500" color="#609060"></a-box>
-                    <a-entity rotation="-90 0 0" position="0 0.02 0">
-                    <a-ring id="track" color="#c24e00" ></a-ring>
-                    </a-entity>
-                    
-                    </a-scene>
             </div>
             
         );
