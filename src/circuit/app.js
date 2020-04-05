@@ -1,3 +1,7 @@
+ 
+import update_stats_screen  from '../utilities/statsScreen';
+
+
  let BPM=0;
  
  let camera=null;
@@ -11,7 +15,7 @@
  let lambdaBPM=0.8;
  let lambdaAngle=0.99;
  let inertiaBPM=0.995;
- let always_steady=true;
+ let always_steady=false;
  let distance=0;
  let b=0;
  let lastKMH=0;
@@ -160,7 +164,7 @@ function update(){
   let newKMH = realStepsize*BPM/60.; // m; = m/s
   newKMH = newKMH * 3.6;
   lastKMH = 0.9 * lastKMH + 0.1 * newKMH;
-  //update_stats_screen(lastKMH, distance/1000.);
+  update_stats_screen(lastKMH, distance/1000.);
 
   if (deltaStep<MINSTEP){deltaStep=0;}
   step(deltaStep);
