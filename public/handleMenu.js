@@ -1,0 +1,18 @@
+function handleMenu(status) {
+    if (status==='showMenu'){
+        document.getElementById('menu').innerHTML='<div class="centralMenu"> <br/> <h1 class="centralMenuContent">Posso Andare a correre?</h1> <br/><br/><br/> <div class="ui green animated button" tabIndex="0" onClick="handleMenu(\'startGame\')"> <div class="visible content">Gioca</div><div class="hidden content"> <i class="right flag checkered icon"></i> </div></div><br/><br/><br/> <div class="ui primary animated button" tabIndex="0" onClick="handleMenu(\'showInstructions\')"> <div class="visible content">Istruzioni</div><div class="hidden content"> <i class="right file alternate icon"></i> </div></div><br/><br/><br/> <div class="ui yellow animated button" tabIndex="0" onClick="handleMenu(\'showDisclaimer\')"> <div class="visible content">Disclaimer</div><div class="hidden content"> <i class="right info icon"></i> </div></div><br/><br/><br/> <div class="ui white animated button" tabIndex="0" onClick="handleMenu(\'seeCredits\')"> <div class="visible content">Credits</div><div class="hidden content"> <i class="right heart outline icon"></i> </div></div></div><div class="footerLogo"> <h3 class="floatFooterContent">Hack At Home 3-6 Aprile 2020</h3> <a href="https://crispybacon.it/"><img class="floatFooterContent" src="./logocrispy.png"/></a> ';
+        }
+else if (status === 'showInstructions'){
+    document.getElementById('menu').innerHTML=' <div class="centralMenu"> <br/> <h1 class="centralMenuContent">Istruzioni</h1> <br/><br/><br/> <h4> Istruzioni per il gioco</h4> <br/> <div class="ui white animated button" tabIndex="0" onClick="handleMenu(\'showMenu\')"> <div class="visible content">Indietro</div><div class="hidden content"> <i class="left arrow icon"></i> </div></div></div><div class="footerLogo"> <h3 class="floatFooterContent">Hack At Home 3-6 Aprile 2020</h3> <a href="https://crispybacon.it/"><img class="floatFooterContent" src="./logocrispy.png"/></a> </div>';
+    }
+else if (status === 'showDisclaimer'){
+    document.getElementById('menu').innerHTML='<div class="centralMenu"> <br/> <h1 class="centralMenuContent">Disclaimer</h1> <br/><br/><br/> <h4> Eventuali informazioni legali </h4> <br/> <div class="ui white animated button" tabIndex="0" onClick="handleMenu(\'showMenu\')"> <div class="visible content">Indietro</div><div class="hidden content"> <i class="left arrow icon"></i> </div></div></div><div class="footerLogo"> <h3 class="floatFooterContent">Hack At Home 3-6 Aprile 2020</h3> <a href="https://crispybacon.it/"><img class="floatFooterContent" src="./logocrispy.png"/></a> </div>';
+    }
+else if (status === 'seeCredits'){
+    document.getElementById('menu').innerHTML=' <div class="centralMenu"> <br/> <h1 class="centralMenuContent">Credits</h1> <br/><br/><br/> <h4> Progetto creato per Hack At Home 3-6 Aprile 2020 organizzato da <a style="color:white;text-decoration:underline" href="https://crispybacon.it/">Crispy Bacon</a> <br/> <br/> Autori: Michele Buccoli, Francesco Foscarin, Lorenzo Neri, Denis Rasia </h4> <br/> <div class="ui white animated button" tabIndex="0" onClick="handleMenu(\'showMenu\')"> <div class="visible content">Indietro</div><div class="hidden content"> <i class="left arrow icon"></i> </div></div></div><div class="footerLogo"> <h3 class="floatFooterContent">Hack At Home 3-6 Aprile 2020</h3> <a href="https://crispybacon.it/"><img class="floatFooterContent" src="./logocrispy.png"/></a> </div>';
+    }
+else{
+    //Start game
+    window.location.href="./index.html?begin";
+}
+}
