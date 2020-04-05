@@ -450,11 +450,13 @@ function detectPoseInRealTime(video, net) {
      //Elementi Y spalla sinistra e destra più istante temporale 
      const nowDateAndTime= new Date();
     
-     const leftShoulder = poses[0].keypoints.filter((ele)=>  ele.part === 'leftShoulder')[0].position.y;
-     const rightShoulder= poses[0].keypoints.filter((ele)=>  ele.part === 'rightShoulder')[0].position.y;
+     const leftShoulderY = poses[0].keypoints.filter((ele)=>  ele.part === 'leftShoulder')[0].position.y;
+     const rightShoulderY= poses[0].keypoints.filter((ele)=>  ele.part === 'rightShoulder')[0].position.y;
+     const leftShoulderX = poses[0].keypoints.filter((ele)=>  ele.part === 'leftShoulder')[0].position.x;
+     const rightShoulderX= poses[0].keypoints.filter((ele)=>  ele.part === 'rightShoulder')[0].position.x;
 
-     BPMValue = find_bpm(Math.round((leftShoulder+rightShoulder)/2 ),nowDateAndTime );
-     //console.log(BPMValue);
+     BPMValue = find_bpm(leftShoulderY,rightShoulderY,leftShoulderX,rightShoulderX,nowDateAndTime );
+    //  console.log(BPMValue);
      //blinkingElement(BPMValue);
      circuit.updateBPM(BPMValue);
     // End monitoring code for frames per second
