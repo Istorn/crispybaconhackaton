@@ -63,18 +63,18 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <script src="./handleMenu.js"></script>
     <script>
-      if (window.location.search.substr(1).length<=0)
-        window.location.href="menu.html";
+        
     </script>
   </head>
 
   <body >
     
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
     
-  
+    
+    <div id="menu"><div class="centralMenu"> <br/> <h1 class="centralMenuContent">Posso Andare a correre?</h1> <br/><br/><br/> <div class="ui green animated button" tabIndex="0" onClick="handleMenu('startGame')"> <div class="visible content">Gioca</div><div class="hidden content"> <i class="right flag checkered icon"></i> </div></div><br/><br/><br/> <div class="ui primary animated button" tabIndex="0" onClick="handleMenu('showInstructions')"> <div class="visible content">Istruzioni</div><div class="hidden content"> <i class="right file alternate icon"></i> </div></div><br/><br/><br/> <div class="ui yellow animated button" tabIndex="0" onClick="handleMenu('showDisclaimer')"> <div class="visible content">Disclaimer</div><div class="hidden content"> <i class="right info icon"></i> </div></div><br/><br/><br/> <div class="ui white animated button" tabIndex="0" onClick="handleMenu('seeCredits')"> <div class="visible content">Credits</div><div class="hidden content"> <i class="right heart outline icon"></i> </div></div></div><div class="footerLogo"> <h3 class="floatFooterContent">Hack At Home 3-6 Aprile 2020</h3> <a href="https://crispybacon.it/"><img class="floatFooterContent" src="./logocrispy.png"/></a> </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
