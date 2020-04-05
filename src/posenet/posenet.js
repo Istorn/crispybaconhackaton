@@ -464,6 +464,7 @@ function detectPoseInRealTime(video, net) {
   }
 
   poseDetectionFrame();
+  document.getElementsByClassName('dg ac')[0].style.visibility='hidden';
   return BPMValue;
 }
 

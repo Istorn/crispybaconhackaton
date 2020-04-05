@@ -9,4 +9,8 @@ ReactDOM.render(<App/>,document.querySelector('#root'));
 
 window.onload = function (){
     circuit.load();
+    
+}
+window.load = function(){
+    
 }
