@@ -3,7 +3,8 @@ import dat from 'dat.gui';
 import Stats from 'stats-js';
 //import gatherData from '../utilities/bodyAnalysis';
 import {drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from './demo_util';
-import find_bpm from '../utilities/bpmFunctions';
+import {find_bpm} from '../utilities/bpmFunctions';
+import {is_boost_active} from '../utilities/bpmFunctions';
 import { setTimeout } from 'timers';
 
 import * as circuit from '../circuit/app';
@@ -278,6 +279,7 @@ function setupFPS() {
  */
 function detectPoseInRealTime(video, net) {
   let BPMValue= 0;
+  let boost_active = false;
   const canvas = document.getElementById('output');
   const ctx = canvas.getContext('2d');
 
@@ -454,8 +456,13 @@ function detectPoseInRealTime(video, net) {
      const rightShoulderY= poses[0].keypoints.filter((ele)=>  ele.part === 'rightShoulder')[0].position.y;
      const leftShoulderX = poses[0].keypoints.filter((ele)=>  ele.part === 'leftShoulder')[0].position.x;
      const rightShoulderX= poses[0].keypoints.filter((ele)=>  ele.part === 'rightShoulder')[0].position.x;
+     const leftWristY = poses[0].keypoints.filter((ele)=>  ele.part === 'leftWrist')[0].position.y;
+     const rightWristY = poses[0].keypoints.filter((ele)=>  ele.part === 'rightWrist')[0].position.y;
 
      BPMValue = find_bpm(leftShoulderY,rightShoulderY,leftShoulderX,rightShoulderX,nowDateAndTime );
+     boost_active = is_boost_active(leftWristY, rightWristY,rightShoulderY,leftShoulderY,nowDateAndTime);
+     console.log(boost_active);
+
     //  console.log(BPMValue);
      //blinkingElement(BPMValue);
      circuit.updateBPM(BPMValue);
