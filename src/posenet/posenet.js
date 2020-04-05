@@ -478,7 +478,9 @@ function detectPoseInRealTime(video, net) {
 
     //  console.log(BPMValue);
      //blinkingElement(BPMValue);
-     circuit.updateBPM(BPMValue);
+     if(BPMValue>0){
+      circuit.updateBPM(BPMValue);
+     }
     // End monitoring code for frames per second
     stats.end();
 

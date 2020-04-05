@@ -6,7 +6,7 @@ let previous_min_value = 0;
 
 let previous_boost_time = Date.now();
 
-const sensitivity =  17 //modify this number. Bigger number means more sensitivity
+const sensitivity =  17 //modify this number. Bigger number means higher sensitivity
 const boost_duration = 1200 // in milliseconds
 
 
@@ -15,6 +15,7 @@ export const  find_bpm = (leftShoulderY,rightShoulderY,leftShoulderX,rightShould
     let shoulderX = Math.abs(leftShoulderX - rightShoulderX);
 
     let threshold = shoulderX / sensitivity
+    actual_bpm = 0;
     if (shoulderY<previous_value && ascending){
         if (Math.abs(shoulderY-previous_min_value) > threshold){ //peak found
             actual_bpm = 1000*60/(time-previous_peak_time);
@@ -24,6 +25,7 @@ export const  find_bpm = (leftShoulderY,rightShoulderY,leftShoulderX,rightShould
         }
         previous_peak_time=time;
         ascending= false;
+
     }
     else if (shoulderY<previous_value && !(ascending)){
         previous_value = shoulderY;
