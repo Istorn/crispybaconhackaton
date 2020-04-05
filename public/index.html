@@ -10,9 +10,43 @@
       name="description"
       content="Web site created using create-react-app"
     />
+
+    <style>
+
+    .centralMenu {
+        position:fixed;
+        top: 25%;
+        left: 45%;
+        width:40%;
+        height:60%;
+        margin-top: -9em; /*set to a negative number 1/2 of your height*/
+        margin-left: -15em; /*set to a negative number 1/2 of your width*/
+        border: 1px solid white;
+        background-color: #FF006F;
+        border-radius: 10px;
+        color: white;
+        text-align: center;
+    
+    }
+    .centralMenuContent{
+      display: inline;
+      float:none;
+      
+    }
+    .footerLogo{
+        position: absolute;
+        bottom: 0;
+        width:50%;
+        margin-left:35%;
+        display: inline;
+      float: none;
+    }
+    
+    </style>
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <script data-main="scripts/main" src="https://aframe.io/releases/1.0.4/aframe.min.js">
     </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha256-9mbkOfVho3ZPXfM7W8sV2SndrGDuh7wuyLjtsWeTI1Q=" crossorigin="anonymous" />
     <!--
        
       manifest.json provides metadata used when your web app is installed on a
