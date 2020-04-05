@@ -8,24 +8,28 @@
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="Web site created using create-react-app"
+      content="Corunner Virus Hackaton app for HackAtHome organized by Crispy Bacon"
     />
 
     <style>
 
     .centralMenu {
         position:fixed;
-        top: 25%;
+        top: 15%;
         left: 45%;
-        width:40%;
-        height:60%;
+        width:50%;
+        padding:2%;
+        height:relative;
         margin-top: -9em; /*set to a negative number 1/2 of your height*/
         margin-left: -15em; /*set to a negative number 1/2 of your width*/
+        margin-bottom: 9em;
+        padding-bottom: 30px;
         border: 1px solid white;
         background-color: #FF006F;
         border-radius: 10px;
         color: white;
         text-align: center;
+        overflow: auto;
     
     }
     .centralMenuContent{
@@ -37,7 +41,7 @@
         position: absolute;
         bottom: 0;
         width:50%;
-        margin-left:35%;
+        margin-left:30%;
         display: inline;
       float: none;
     }
@@ -62,7 +66,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>Corunner Virus</title>
     <script src="./handleMenu.js"></script>
     <script>
         
@@ -74,7 +78,7 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     
     
-    <div id="menu"><div class="centralMenu"> <br/> <h1 class="centralMenuContent">Posso Andare a correre?</h1> <br/><br/><br/> <div class="ui green animated button" tabIndex="0" onClick="handleMenu('startGame')"> <div class="visible content">Gioca</div><div class="hidden content"> <i class="right flag checkered icon"></i> </div></div><br/><br/><br/> <div class="ui primary animated button" tabIndex="0" onClick="handleMenu('showInstructions')"> <div class="visible content">Istruzioni</div><div class="hidden content"> <i class="right file alternate icon"></i> </div></div><br/><br/><br/> <div class="ui yellow animated button" tabIndex="0" onClick="handleMenu('showDisclaimer')"> <div class="visible content">Disclaimer</div><div class="hidden content"> <i class="right info icon"></i> </div></div><br/><br/><br/> <div class="ui white animated button" tabIndex="0" onClick="handleMenu('seeCredits')"> <div class="visible content">Credits</div><div class="hidden content"> <i class="right heart outline icon"></i> </div></div></div><div class="footerLogo"> <h3 class="floatFooterContent">Hack At Home 3-6 Aprile 2020</h3> <a href="https://crispybacon.it/"><img class="floatFooterContent" src="./logocrispy.png"/></a> </div>
+    <div id="menu"><div class="centralMenu"> <br/> <h1 class="centralMenuContent">Corunner Virus</h1> <br/><br/><br/> <div class="ui green animated button" tabIndex="0" onClick="handleMenu('startGame')"> <div class="visible content">Gioca</div><div class="hidden content"> <i class="right flag checkered icon"></i> </div></div><br/><br/><br/> <div class="ui primary animated button" tabIndex="0" onClick="handleMenu('showInstructions')"> <div class="visible content">Istruzioni</div><div class="hidden content"> <i class="right clipboard list icon"></i> </div></div><br/><br/><br/> <div class="ui yellow animated button" tabIndex="0" onClick="handleMenu('showDisclaimer')"> <div class="visible content">Disclaimer</div><div class="hidden content"> <i class="right info icon"></i> </div></div><br/><br/><br/> <div class="ui white animated button" tabIndex="0" onClick="handleMenu('seeCredits')"> <div class="visible content">Credits</div><div class="hidden content"> <i class="right heart outline icon"></i> </div></div><br/><br/></div><div class="footerLogo"> <h3 class="floatFooterContent">Hack At Home 3-6 Aprile 2020 - Organizzato da <a href="https://crispybacon.it/">Crispy Bacon</a></h3> </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
