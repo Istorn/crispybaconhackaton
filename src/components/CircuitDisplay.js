@@ -23,6 +23,7 @@ class CircuitDisplay extends React.Component{
 
         return(
             <div id="scena">
+
                 <a-scene light="defaultLightsEnabled: true">      
                     <a-entity light="type: ambient; intensity: 0.7"></a-entity>
                     <a-entity light="type: directional; intensity: 0.8 castShadow:true; position=1 10 1"></a-entity>

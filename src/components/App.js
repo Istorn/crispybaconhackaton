@@ -1,12 +1,29 @@
 import React from 'react';
 import VideoRenderer from './VideoRenderer';
+import logoCrispy from '../assets/logocrispy.png';
 
+class App extends React.Component {
+    
+    constructor(){
+        super();
+        
+        
+    }
 
-const App = () => {
-    return (
-        <div>
-            <VideoRenderer/>
-        </div>);
+    
+   
+    render(){
+
+            return (
+                <div>
+                    
+
+                    <VideoRenderer showOrNot={'yes'}/>
+                </div>
+                );
+        
+        
+    }
 }
 
 
