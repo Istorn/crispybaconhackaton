@@ -117,6 +117,7 @@ function moveCube(){
   console.log("Breakpoint "+b);
   let sign=document.querySelector("#breakpoint");
   sign.setAttribute("position", breakpoints[b].x +" 5 "+ breakpoints[b].z);
+  sign.setAttribute("scale", "1 1 1");
 }
 function moveTo(deltaStep, angle){  
   camera.position.z =camera.position.z-deltaStep*Math.cos(-angle);
@@ -145,7 +146,7 @@ function moveTo(deltaStep, angle){
   else{
    moveTo(distNext.r, distNext.phi);
    b=(b+1)%breakpoints.length;
-   moveCube();
+   //moveCube();
    step(deltaStep-distNext.r)
   }  
 }   

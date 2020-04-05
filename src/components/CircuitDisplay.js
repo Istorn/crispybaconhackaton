@@ -36,7 +36,7 @@ class CircuitDisplay extends React.Component{
                     <a-sky src="#sky"></a-sky>
             
                     <div id="entityMode"></div>
-                    <a-sphere id="breakpoint" position="0.672 4 -6.465" scale="1 1 1" color="red"></a-sphere>
+                    <a-sphere id="breakpoint" position="0.672 4 -6.465" scale="0 0 0" color="red"></a-sphere>
                 </a-scene>
 
             </div>
