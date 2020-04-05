@@ -67,13 +67,8 @@ function createTrees(){
 
   //camera.position.y=camera.position.y+DELTAHEAD*Math.cos(2*Math.PI*curT*BPM/60.);
 
-  camera.rotation.y=angle;
-
-  
+  camera.rotation.y=angle;  
 }   
-
-
-
 
 
 function update(){
