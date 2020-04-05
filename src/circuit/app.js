@@ -9,7 +9,8 @@ import update_stats_screen  from '../utilities/statsScreen';
  
  let MINSTEP=0.001;
  let realStepsize=0.5;
- let virtualStepsize=1;
+ let VIRTUALSTEPSIZE=3;
+ let virtualStepsize=VIRTUALSTEPSIZE;
  let lastT=null;
  let curT=0;
  let lambdaBPM=0.8;
@@ -93,6 +94,7 @@ import update_stats_screen  from '../utilities/statsScreen';
 };
 
 
+
 function towards(dest){
  // console.log("I'm at "+camera.position.x+" "+camera.position.z);
   //console.log(b+"-> I want to go to "+dest.x+" "+dest.z);
@@ -148,7 +150,14 @@ function moveTo(deltaStep, angle){
   }  
 }   
 
+function updateVirtualstep(newStep){
+  if(newStep==-1){
+    virtualStepsize=VIRTUALSTEPSIZE;
+    return; 
+  }
+  virtualStepsize=newStep;
 
+}
 
 function update(){
 
