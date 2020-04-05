@@ -1,8 +1,9 @@
-var delta_angle= stepsize/RADIUS;
+//var delta_angle= stepsize/RADIUS;
+
+import * as main from './main';
 
 
-
-function createTrees(){
+ function createTrees(){
   let tree=document.querySelector(".tree");
   let forest=document.querySelector("#forest");
   let num_trees=100;
@@ -24,7 +25,7 @@ function createTrees(){
  }
 
 
-function step(deltaStep){            
+ function step(deltaStep){            
   if(camera===null){ 
     console.log("Problem");
   }

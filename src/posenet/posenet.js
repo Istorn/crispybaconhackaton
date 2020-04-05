@@ -5,6 +5,8 @@ import Stats from 'stats-js';
 import {drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from './demo_util';
 import find_bpm from '../utilities/bpmFunctions';
 import { setTimeout } from 'timers';
+
+import * as circuit from '../circuit/app';
 const videoWidth = 250;
 const videoHeight = 250;
 const stats = new Stats();
@@ -452,8 +454,9 @@ function detectPoseInRealTime(video, net) {
      const rightShoulder= poses[0].keypoints.filter((ele)=>  ele.part === 'rightShoulder')[0].position.y;
 
      BPMValue = find_bpm(Math.round((leftShoulder+rightShoulder)/2 ),nowDateAndTime );
-     console.log(BPMValue);
-     blinkingElement(BPMValue);
+     //console.log(BPMValue);
+     //blinkingElement(BPMValue);
+     circuit.updateBPM(BPMValue);
     // End monitoring code for frames per second
     stats.end();
 
@@ -465,15 +468,7 @@ function detectPoseInRealTime(video, net) {
 }
 
 
-const padStart = (value)=>{
-  if (value.length<2)
-      {
-          console.log(value);
-          return "0".concat('',value.toString());
-      }
 
-      
-}
 
 
 const blinkingElement = (timeblink) =>{
@@ -529,7 +524,7 @@ export default async function bindPage() {
   setupGui([], net);
   setupFPS();
   const bpmvalue=detectPoseInRealTime(video, net);
-  console.log("invoco blink");
+  //console.log("invoco blink");
   
   
 }

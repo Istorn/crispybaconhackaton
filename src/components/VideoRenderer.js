@@ -1,6 +1,6 @@
 import React from 'react';
 import bindPage from '../posenet/posenet';
-
+import CircuitDisplay from './CircuitDisplay';
 class VideoRenderer extends React.Component{
     
     
@@ -12,7 +12,7 @@ class VideoRenderer extends React.Component{
     render(){
         return (
             <div id='main'  >
-                
+                <CircuitDisplay/>
                 <video id="video" style={{'width':0, 'height':0}} hidden>
 
                 </video>
