@@ -147,6 +147,7 @@ function moveTo(deltaStep, angle){
    moveTo(distNext.r, distNext.phi);
    b=(b+1)%breakpoints.length;
    //moveCube();
+   console.log("Breakpoint "+b);
    step(deltaStep-distNext.r)
   }  
 }   
