@@ -42,23 +42,20 @@ export const  find_bpm = (leftShoulderY,rightShoulderY,leftShoulderX,rightShould
 
 
 
-export const is_boost_active = (leftElbowY, rightElbowY,rightShoulderY,leftShoulderY, leftElbowYScore, rightElbowYScore, time) => {
+export const is_boost_active = (leftElbowY, rightElbowY,rightShoulderY,leftShoulderY,  time) => {
     let shoulderY = Math.round((leftShoulderY+rightShoulderY)/2 );
     let elbowY = Math.round((leftElbowY+rightElbowY)/2 );
     let boost = false;
-    console.log("elbow: %s  shoulder: %s, scores %s %s",elbowY,shoulderY, leftElbowYScore,rightElbowYScore)
-    console.log("time %s, prev_time %s",time, previous_boost_time)
 
-
-    if (elbowY < shoulderY){ //we are doing jumping jacks
-        if (time < previous_boost_time + boost_duration){ // still boosted
+    if (elbowY > shoulderY){ //not doing jumping jacks
+        if (time < previous_boost_time + boost_duration){ // still boosted because it happened 1.2 s ago
             boost = true;
         }
         else{
             boost = false;
         }
     }
-    else {   
+    else {   //we are doing jumping jacks
         boost = true;
         previous_boost_time = time;
     }
