@@ -96,6 +96,12 @@ export  function load(){
   console.log(window.AFRAME.scenes[0]); 
   console.log("loading...");
   console.log(scene);
+  if (!scene){
+    setInterval(()=>{
+        load();
+    },5000);
+    return "not loaded";
+  }
   if(scene.hasLoaded){sceneLoaded();}
   else{scene.addEventListener('loaded', sceneLoaded);}
   return "loaded";
@@ -104,12 +110,13 @@ export  function load(){
 function sceneLoaded(){
   console.log("loaded?");    
   camera=window.AFRAME.scenes[0].camera;
-  camera.position.x=RADIUS;
+  //camera.position.x=RADIUS;
   camera.position.y=1.7; // 170 cm
-  ring= document.querySelector("#track");
+  /*ring= document.querySelector("#track");
   ring.setAttribute("radius-inner",RADIUS-HALF_WIDTH);
   ring.setAttribute("radius-outer",RADIUS+HALF_WIDTH);
-  createTrees();
+  createTrees();*/
+  //document.getElementById('entityModel').innerHTML='          <a-entity objModel="obj: #scene-obj; mtl: #scene-mtl"  shadow="cast: true" position="40 -1 20"></a-entity>  ';  
   window.requestAnimationFrame(update);
 }
 document.addEventListener('keydown', function(event){

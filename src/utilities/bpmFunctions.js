@@ -15,7 +15,7 @@ const find_bpm = (leftShoulderY,rightShoulderY,leftShoulderX,rightShoulderX,time
             actual_bpm = 1000*60/(time-previous_peak_time);
         }
         else{ // standing still
-            console.log("%s lower than %s", Math.abs(shoulderY-previous_min_value),threshold)
+            //console.log("%s lower than %s", Math.abs(shoulderY-previous_min_value),threshold)
             actual_bpm = 0;
         }
         previous_peak_time=time;
