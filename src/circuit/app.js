@@ -14,7 +14,7 @@ import update_stats_screen  from '../utilities/statsScreen';
  let lastT=null;
  let curT=0;
  let lambdaBPM=0.8;
- let lambdaKMH=0.95;
+ let lambdaKMH=0.85;
  let lambdaAngle=0.99;
  let inertiaBPM=0.995;
  let always_steady=false;
@@ -150,12 +150,8 @@ function moveTo(deltaStep, angle){
   }  
 }   
 
-function updateVirtualstep(newStep){
-  if(newStep==-1){
-    virtualStepsize=VIRTUALSTEPSIZE;
-    return; 
-  }
-  virtualStepsize=newStep;
+function updateVirtualstep(stepFactor){
+  virtualStepsize = stepFactor*VIRTUALSTEPSIZE;
 
 }
 
