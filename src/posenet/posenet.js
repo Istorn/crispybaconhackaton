@@ -456,11 +456,13 @@ function detectPoseInRealTime(video, net) {
      const rightShoulderY= poses[0].keypoints.filter((ele)=>  ele.part === 'rightShoulder')[0].position.y;
      const leftShoulderX = poses[0].keypoints.filter((ele)=>  ele.part === 'leftShoulder')[0].position.x;
      const rightShoulderX= poses[0].keypoints.filter((ele)=>  ele.part === 'rightShoulder')[0].position.x;
-     const leftWristY = poses[0].keypoints.filter((ele)=>  ele.part === 'leftWrist')[0].position.y;
-     const rightWristY = poses[0].keypoints.filter((ele)=>  ele.part === 'rightWrist')[0].position.y;
+     const leftElbowY = poses[0].keypoints.filter((ele)=>  ele.part === 'leftElbow')[0].position.y;
+     const rightElbowY = poses[0].keypoints.filter((ele)=>  ele.part === 'rightElbow')[0].position.y;
+     const leftElbowYScore = poses[0].keypoints.filter((ele)=>  ele.part === 'leftElbow')[0].score;
+     const rightElbowYScore = poses[0].keypoints.filter((ele)=>  ele.part === 'rightElbow')[0].score;
 
-     BPMValue = find_bpm(leftShoulderY,rightShoulderY,leftShoulderX,rightShoulderX,nowDateAndTime );
-     boost_active = is_boost_active(leftWristY, rightWristY,rightShoulderY,leftShoulderY,nowDateAndTime);
+     BPMValue = find_bpm(leftShoulderY,rightShoulderY,leftShoulderX,rightShoulderX,Date.now() );
+     boost_active = is_boost_active(leftElbowY, rightElbowY,rightShoulderY,leftShoulderY, leftElbowYScore, rightElbowYScore, Date.now());
      console.log(boost_active);
 
     //  console.log(BPMValue);

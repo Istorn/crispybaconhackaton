@@ -4,7 +4,7 @@ let ascending = true;
 let previous_value = 80;
 let previous_min_value = 0;
 
-let previous_boost_time = 0;
+let previous_boost_time = Date.now();
 
 const sensitivity =  17 //modify this number. Bigger number means more sensitivity
 const boost_duration = 1200 // in milliseconds
@@ -42,24 +42,27 @@ export const  find_bpm = (leftShoulderY,rightShoulderY,leftShoulderX,rightShould
 
 
 
-export const is_boost_active = (leftWristY, rightWristY,rightShoulderY,leftShoulderY, time) => {
+export const is_boost_active = (leftElbowY, rightElbowY,rightShoulderY,leftShoulderY, leftElbowYScore, rightElbowYScore, time) => {
     let shoulderY = Math.round((leftShoulderY+rightShoulderY)/2 );
-    let wristY = Math.round((leftWristY+rightWristY)/2 );
+    let elbowY = Math.round((leftElbowY+rightElbowY)/2 );
     let boost = false;
-    // console.log("wrist: %s  shoulder: %s",wristY)
+    console.log("elbow: %s  shoulder: %s, scores %s %s",elbowY,shoulderY, leftElbowYScore,rightElbowYScore)
+    console.log("time %s, prev_time %s",time, previous_boost_time)
 
-    if (wristY> shoulderY){ //we are doing jumping jacks
-        boost = true;
-        previous_boost_time = time;
-    }
-    else{
-        if (time > previous_boost_time + boost_duration){ // still boosted
+
+    if (elbowY < shoulderY){ //we are doing jumping jacks
+        if (time < previous_boost_time + boost_duration){ // still boosted
             boost = true;
         }
         else{
             boost = false;
         }
     }
+    else {   
+        boost = true;
+        previous_boost_time = time;
+    }
+
     return boost
 }
 
