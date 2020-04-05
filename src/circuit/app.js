@@ -150,7 +150,7 @@ function moveTo(deltaStep, angle){
   }  
 }   
 
-function updateVirtualstep(stepFactor){
+export function updateVirtualstep(stepFactor){
   virtualStepsize = stepFactor*VIRTUALSTEPSIZE;
 
 }

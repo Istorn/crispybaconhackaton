@@ -6,6 +6,8 @@ import {drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI,
 import {find_bpm} from '../utilities/bpmFunctions';
 import {is_boost_active} from '../utilities/bpmFunctions';
 import { setTimeout } from 'timers';
+import {updateVirtualstep} from '../circuit/app'
+
 
 import * as circuit from '../circuit/app';
 const videoWidth = 250;
@@ -463,6 +465,15 @@ function detectPoseInRealTime(video, net) {
 
      BPMValue = find_bpm(leftShoulderY,rightShoulderY,leftShoulderX,rightShoulderX,Date.now() );
      boost_active = is_boost_active(leftElbowY, rightElbowY,rightShoulderY,leftShoulderY, Date.now());
+     if(boost_active){
+      updateVirtualstep(2)
+     }
+     else{
+      updateVirtualstep(1)
+     }
+
+     
+
     //  console.log(boost_active);
 
     //  console.log(BPMValue);
