@@ -6,7 +6,11 @@ Ci siamo qua noi!
 
 Con Corunner Virus  puoi partecipare ad una corsa virtuale: corri sul posto davanti alla webcam e il sistema di _motion capture_ riconoscerà i tuoi movimenti. Man mano che corri ti vedrai avanzare in un paesaggio di campagna in 3d.
 
+![Immagine di esempio](https://github.com/Istorn/crispybaconhackaton/blob/master/Schermata%202020-04-06%20alle%2020.34.19.png?raw=true)
+
 Provalo subito visitando questo link: https://morning-earth-30270.herokuapp.com/menu.html
+
+
 
 I più tecnici possono provare ad installarla nel loro sistema.
 
@@ -19,7 +23,6 @@ Dipendenze da installare:
 - stat-js
 - @tensorflow-models/posenet
 - @tensorflow/tfjs
-- json-server
 
 Questo progetto è stato bootstrappato con [Create React App](https://github.com/facebook/create-react-app).
 
