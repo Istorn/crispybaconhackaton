@@ -9,14 +9,14 @@ import update_stats_screen  from '../utilities/statsScreen';
  
  let MINSTEP=0.001;
  let realStepsize=0.5;
- let VIRTUALSTEPSIZE=3;
+ let VIRTUALSTEPSIZE=1.2;
  let virtualStepsize=VIRTUALSTEPSIZE;
  let lastT=null;
  let curT=0;
- let lambdaBPM=0.8;
+ let lambdaBPM=0;
  let lambdaKMH=0.85;
  let lambdaAngle=0.99;
- let inertiaBPM=0.995;
+ let inertiaBPM=1;
  let always_steady=false;
  let totalDistance=0;
  let b=0;
@@ -91,6 +91,7 @@ import update_stats_screen  from '../utilities/statsScreen';
 
  function inertia(){
 //	console.log("inertia", inertiaBPM*BPM);
+  if(inertiaBPM==1){return; }
 	updateBPM(inertiaBPM*BPM);
 };
 
@@ -228,6 +229,6 @@ function sceneLoaded(){
   
   
   camera.position.y=-0.5; // 170 cm
-  //showBreakpoints();
+  showBreakpoints();
   window.requestAnimationFrame(update);
 }

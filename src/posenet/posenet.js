@@ -5,6 +5,7 @@ import Stats from 'stats-js';
 import {drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from './demo_util';
 import {find_bpm} from '../utilities/bpmFunctions';
 import {is_boost_active} from '../utilities/bpmFunctions';
+import {smooth_bpm} from '../utilities/bpmFunctions';
 import { setTimeout } from 'timers';
 import {updateVirtualstep} from '../circuit/app'
 
@@ -458,12 +459,15 @@ function detectPoseInRealTime(video, net) {
      const rightShoulderY= poses[0].keypoints.filter((ele)=>  ele.part === 'rightShoulder')[0].position.y;
      const leftShoulderX = poses[0].keypoints.filter((ele)=>  ele.part === 'leftShoulder')[0].position.x;
      const rightShoulderX= poses[0].keypoints.filter((ele)=>  ele.part === 'rightShoulder')[0].position.x;
+     const leftShoulderYScore = poses[0].keypoints.filter((ele)=>  ele.part === 'leftShoulder')[0].score;
+     const rightShoulderYScore = poses[0].keypoints.filter((ele)=>  ele.part === 'rightShoulder')[0].score;
+
      const leftElbowY = poses[0].keypoints.filter((ele)=>  ele.part === 'leftElbow')[0].position.y;
      const rightElbowY = poses[0].keypoints.filter((ele)=>  ele.part === 'rightElbow')[0].position.y;
     //  const leftElbowYScore = poses[0].keypoints.filter((ele)=>  ele.part === 'leftElbow')[0].score;
     //  const rightElbowYScore = poses[0].keypoints.filter((ele)=>  ele.part === 'rightElbow')[0].score;
 
-     BPMValue = find_bpm(leftShoulderY,rightShoulderY,leftShoulderX,rightShoulderX,Date.now() );
+     BPMValue = find_bpm(leftShoulderY,rightShoulderY,leftShoulderX,rightShoulderX,leftShoulderYScore,rightShoulderYScore, Date.now() );
      boost_active = is_boost_active(leftElbowY, rightElbowY,rightShoulderY,leftShoulderY, Date.now());
      if(boost_active){
       updateVirtualstep(2)
@@ -478,8 +482,8 @@ function detectPoseInRealTime(video, net) {
 
     //  console.log(BPMValue);
      //blinkingElement(BPMValue);
-     if(BPMValue>0){
-      circuit.updateBPM(BPMValue);
+     if(BPMValue>=0){
+      circuit.updateBPM( smooth_bpm(BPMValue));
      }
     // End monitoring code for frames per second
     stats.end();
