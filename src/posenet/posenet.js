@@ -468,13 +468,13 @@ function detectPoseInRealTime(video, net) {
     //  const rightElbowYScore = poses[0].keypoints.filter((ele)=>  ele.part === 'rightElbow')[0].score;
 
      BPMValue = find_bpm(leftShoulderY,rightShoulderY,leftShoulderX,rightShoulderX,leftShoulderYScore,rightShoulderYScore, Date.now() );
-     boost_active = is_boost_active(leftElbowY, rightElbowY,rightShoulderY,leftShoulderY, Date.now());
-     if(boost_active){
-      updateVirtualstep(2)
-     }
-     else{
-      updateVirtualstep(1)
-     }
+    //  boost_active = is_boost_active(leftElbowY, rightElbowY,rightShoulderY,leftShoulderY, Date.now());
+    //  if(boost_active){
+    //   updateVirtualstep(2)
+    //  }
+    //  else{
+    //   updateVirtualstep(1)
+    //  }
 
      
 
