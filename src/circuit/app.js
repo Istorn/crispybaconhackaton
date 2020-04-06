@@ -229,6 +229,6 @@ function sceneLoaded(){
   
   
   camera.position.y=-0.5; // 170 cm
-  showBreakpoints();
+  //showBreakpoints();
   window.requestAnimationFrame(update);
 }
